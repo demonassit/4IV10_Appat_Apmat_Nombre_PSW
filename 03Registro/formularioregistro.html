@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <script src="./js/validacion.js" ></script>
+</head>
+<body>
+    <p>
+        Habia una vez un patito que decia miau miau, y este patito queria aprender a utilizar diferentes tipos de formulario wiiii.
+        <br>
+        Existen dos metodos principales para la obtención de los datos dentro de un formulario web, para lo cual aqui lo explicaremos:
+    </p>
+    <br>
+    <h1>GET: </h1> Este metodo es el estandar como salida del navegador mediante el cual se resuelve una peticion por parte del cliente, asi mismo en la salida estandar(url), se puede visualizar los datos enviados mediante el formulario.
+    <br>
+    <h1>POST: </h1> Este metodo es el mas utilizado
+    para el envio de información desde un formulario atendiendo una petición por parte del cliente, actuando para poder agregar o insertar nuevos datos en una BD, asi mismo a diferencia del metodo get, este utiliza "un tipo de seguridad", mediante el cual la información no es visible por medio de la salida estandar del navegador.
+    <br>
+
+    <div class="container" >
+        <div class="content-formulario" >
+            <form name="formulario" method="get" onsubmit="return validar(this)" >
+                <br>
+                <label>Nombre: </label>
+                <br>
+                <input type="text" name="nombre" id="nombre">
+                <br>
+                <label>Edad: </label>
+                <br>
+                <input type="number" name="edad" id="edad" min="01" max="99">
+                <br>
+                <label >Fecha de Nacimiento:</label>
+                <br>
+                <input type="date" name="fecha" id="miento" >
+                <br>
+                <label>Email:</label>
+                <br>
+                <input type="email" name="correo" id="correo">
+                <br>
+                <input type="submit" name="enviar" value="Enviar Datos del Registro">
+                <br>
+                <input type="reset" name="borrar" value="Borrar Datos">
+
+            </form>
+        </div>
+        <div class="tarea" >
+            Quiero que se valide el campo de fecha para que no existan años superiores al actual asi como tampoco años con el 31 de febrero
+        </div>
+    </div>
+    
+</body>
+</html>
