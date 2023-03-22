@@ -53,9 +53,10 @@ public class DatosPersonales extends HttpServlet {
             
             String namelocal = request.getLocalName();
             String nameremote = request.getRemoteUser();
-            
-            String adreesremote = request.getRemoteHost();
 
+            String adreesremote = request.getRemoteHost();
+            String addreslocal = request.getLocalName();
+            
             
             
             
@@ -76,7 +77,7 @@ public class DatosPersonales extends HttpServlet {
                     + "<br>"
                     + "<p> Elementos remotos: " + ipremota + nameremote + puertoremoto
                     + "<br>"
-                    + "<p> El host es: " + adreesremote
+                    + "<p> El host es: " + addreslocal
                     + "<a href='index.html' >Regresar a la pagina principal</a>");
             out.println("</body>");
             out.println("</html>");
