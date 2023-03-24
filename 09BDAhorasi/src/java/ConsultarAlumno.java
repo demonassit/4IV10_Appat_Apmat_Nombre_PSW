@@ -1,22 +1,26 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.*;
-import javax.servlet.ServletConfig;
 
 /**
  *
- * @author alumno
+ * @author demon
  */
-public class RegistrarAlumno extends HttpServlet {
+public class ConsultarAlumno extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -26,12 +30,8 @@ public class RegistrarAlumno extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
-     * 
-     * vamos a necesitar un constructor para poder
-     * inicializar las variables que se van a ocupar para 
-     * la conexion con la bd
-     * para ello vamos a crear 3 tipos de objeto
      */
+    
     
     private Connection con;
     
@@ -95,54 +95,64 @@ public class RegistrarAlumno extends HttpServlet {
         
         }
     }
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            
-            //obtener los parametros del formulario
-            
-            int bol, edad;
-            String nom, appat, apmat;
-            
-            bol = Integer.parseInt(request.getParameter("boleta"));
-            edad = Integer.parseInt(request.getParameter("edad"));
-            
-            nom = request.getParameter("nombre");
-            appat = request.getParameter("appat");
-            apmat = request.getParameter("apmat");
-            
-            
-            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Registro de Estudiantes</title>");            
+            out.println("<title>Lista de Alumnos</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Bienvenido al Registro del Purgatorio del Cecyt wiii</h1>");
-            
-            //si lo registro obtener una salida
-            //y sino que diga registro no completado
-            
-            String q = 
-            "insert into estudiante (boleta, nombre, appat, apmat, edad) "
-            + "values ("+bol+", '"+nom+"', '"+appat+"', '"+apmat+"', "+edad+")";
+            out.println("<h1>Lista de Alumnos Registrados al Dia de hoy</h1>"
+                    + "<table>"
+                    + "<tr>"
+                    + "<td>Boleta</td>"
+                    + "<td>Nombre Completo</td>"
+                    + "<td>Edad</td>"
+                    + "</tr>");
             
             try{
-            set.executeUpdate(q);
-            
-            out.println("<h1>Registro Exitoso del Alumno</h1>");
-            
+                int bol, edad;
+                String nom, appat, apmat;
+                
+                //necesito mi querry
+                String q = "select * from estudiante";
+                
+                //primero debo preparar la sentencia
+                set = con.createStatement();
+                
+                rs = set.executeQuery(q);
+                
+                while(rs.next()){
+                    //primero debo de obtener cada uno de los valores de la tabla
+                    bol = rs.getInt("boleta");
+                    nom = rs.getString("nombre");
+                    appat = rs.getString("appat");
+                    apmat = rs.getString("apmat");
+                    edad = rs.getInt("edad");
+                
+                    //imprimir los elementos en la tabla
+                    out.println("<tr>"
+                            + "<td>"+bol+"</td>"  //boleta
+                            + "<td>"+nom +" "+appat+ " "+ apmat +"</td>"  //nombre completo
+                            + "<td>"+ edad +"</td>"  //edad
+                            + "<tr>");
+                }
+                
+                rs.close();
+                set.close();
+                
+                
             }catch(Exception e){
-            
                 out.println("<h1>Registro No Exitoso solo juguito contigo</h1>");
                 System.out.println("Error: " + e.getMessage());
                 System.out.println("Origen: " + e.getStackTrace());
-                
             }
+            
+            out.println("</table>");
             out.println("<a href = 'index.html'>Regresar al Inicio </a>");
             out.println("</body>");
             out.println("</html>");
