@@ -11,6 +11,39 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>TODO write content</div>
+        <div class="container" >
+            <h1>Aqui van sus cosas de esas de la landing page</h1>
+            <div class="content" >
+                <form name="formulario" method="post" 
+                      action="RegistrarEmpleado" >
+                    <label>Nombre: </label>
+                    <br>
+                    <input type="text" name="nombre" >
+                    <br>
+                    <label>Apellido Paterno: </label>
+                    <br>
+                    <input type="text" name="appat" >
+                    <br>
+                    <label>Apellido Materno </label>
+                    <br>
+                    <input type="text" name="apmat" >
+                    <br>
+                    <label>Correo: </label>
+                    <br>
+                    <input type="text" name="email" >
+                    <br>
+                    <label>Password: </label>
+                    <br>
+                    <input type="password" name="password" >
+                    <br>
+                    <input type="submit" value="Registro de Nuevo Empleado" >
+                    <br><!-- comment -->
+                    <input type="reset" value="Borrar Datos" >
+                </form>
+            </div>
+            <div class ="consulta" >
+                <a href="ConsultaEmpleados.jsp" >Consultar Lista de Empleados</a>
+            </div>
+        </div>
     </body>
 </html>
