@@ -78,15 +78,15 @@ public class MascotaDAO {
             return mascota;
         }else{
             //actualiar
-            this.insertStatement.setInt(1, mascota.getPropietario_id());
-            this.insertStatement.setInt(2, mascota.getRaza_id());
-            this.insertStatement.setTimestamp(3, mascota.getNacimiento());
-            this.insertStatement.setString(4, mascota.getNombre());
-            this.insertStatement.setBlob(5, mascota.getImagen());
-            this.insertStatement.setInt(6, mascota.getTamano());
-            this.insertStatement.setString(7, mascota.getSexo());
-            this.insertStatement.setInt(8, mascota.getPeso());
-            this.insertStatement.setInt(9, mascota.getId());
+            this.updateStatement.setInt(1, mascota.getPropietario_id());
+            this.updateStatement.setInt(2, mascota.getRaza_id());
+            this.updateStatement.setTimestamp(3, mascota.getNacimiento());
+            this.updateStatement.setString(4, mascota.getNombre());
+            this.updateStatement.setBlob(5, mascota.getImagen());
+            this.updateStatement.setInt(6, mascota.getTamano());
+            this.updateStatement.setString(7, mascota.getSexo());
+            this.updateStatement.setInt(8, mascota.getPeso());
+            this.updateStatement.setInt(9, mascota.getId());
             
             this.updateStatement.executeUpdate();
             
