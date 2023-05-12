@@ -9,6 +9,7 @@ import Model.Propietario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -131,5 +132,65 @@ public class PropietarioDAO {
         }
         return propietarioLista;
     }
+    
+    public Propietario getbyId(int idPropietario) throws Exception{
+        
+        this.selectByIdStatement.setInt(1, idPropietario);
+        
+        ResultSet rs = this.selectByIdStatement.executeQuery();
+        
+        if(rs.next()){
+            Propietario propietario = new Propietario(
+                   
+                    rs.getInt("id_propietario"), 
+                    rs.getString("correo"),
+                    rs.getString("nombre"),
+                    rs.getString("appat"),
+                    rs.getString("apmat"),
+                    rs.getString("dir")
+            );
+            
+            return propietario;
+        }
+        return null;
+    }
+    
+    //metodo para borrar
+    public boolean delete(int idPropietario) throws Exception{
+        this.deleteByIdStatement.setInt(1, idPropietario);
+        //aqui ejecuto la actualizacion para el borrado y debe devolver true o false
+        this.deleteByIdStatement.executeUpdate();
+        return true;
+    }
+    
+    //para verificar el usuario 
+    public Propietario login(Propietario propietario) throws SQLException {
+        this.selectLoginStatement.setString(1, propietario.getCorreo());
+        ResultSet rs = this.selectLoginStatement.executeQuery();
+        
+        if(rs.next() && rs.getString("password")!=null){
+            propietario.getPassword();
+            rs.getString("password");
+            
+            System.out.println("Funciona wiiii");
+            
+            Propietario propietarioLogin = new Propietario(
+                    rs.getInt("id_propietario"),
+                    rs.getString("correo"),
+                    rs.getString("nombre"),
+                    rs.getString("appat"),
+                    rs.getString("apmat"),
+                    rs.getString("dir"),
+                    rs.getString("password")
+            );
+            
+            return propietarioLogin;
+            
+        }
+        return null;
+        
+    }
+    
+    
     
 }

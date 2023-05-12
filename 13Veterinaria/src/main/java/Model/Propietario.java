@@ -32,6 +32,18 @@ public class Propietario {
         this.id_propietario = id_propietario;
     }
     
+    public Propietario(int id_propietario, String correo, String nombre, String appat, String apmat, String dir){
+        this.id_propietario = id_propietario;
+        this.correo = correo;
+        this.nombre = nombre;
+        this.appat = appat;
+        this.apmat = apmat;
+        this.dir = dir;
+        
+    }
+    
+
+    
     public Propietario(String correo, String password){
         this.correo = correo;
         this.password = password;
