@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package ControladorServlet;
+package control_Propietarios;
 
 import Model.Propietario;
 import data_access_bd.BDConnection;
@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author alumno
  */
-public class LoginServlet extends HttpServlet {
+public class crearPropietario extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,6 +35,8 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            //creo una instancia del propietario
+            
             //primero la conexion
             Connection conexion = 
                     BDConnection.getConnection(
@@ -43,29 +45,25 @@ public class LoginServlet extends HttpServlet {
             PropietarioDAO propietarioDAO = 
                     new PropietarioDAO(conexion, 
                             request.getServletContext());
+            
             Propietario propietario = new Propietario(
                     request.getParameter("correo"),
-                    
+                    request.getParameter("nombre"),
+                    request.getParameter("appat"),
+                    request.getParameter("apmat"),
+                    request.getParameter("dir"),
                     request.getParameter("password")
             );
             
-            
-            String correo = request.getParameter("correo");
-            String password = request.getParameter("password");
-            
             try{
-                propietario = propietarioDAO.login(propietario);
-                if(propietario != null){
-                    //creo la sesion
-                    request.getSession().setAttribute(
-                            "propietario", propietario);
-                    response.sendRedirect("inicio.jsp");
-                }else{
-                    response.sendRedirect("login.jsp");
-                }
-            }catch(Exception e ){
-                System.out.println("Errror al iniciar la sesion : " 
+                propietario = propietarioDAO.save(propietario);
+                System.out.println("Propietario agregado");
+                response.sendRedirect("login.jsp");
+            }catch(Exception e){
+                System.out.println("Error al registrar al propietario : " 
                         + e.getMessage());
+                response.sendRedirect("error.jsp");
+            
             }
         }
     }
@@ -96,38 +94,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        //primero establecemos la conexion con bd
-        Connection connection = BDConnection.getConnection(
-        
-            request.getServletContext());
-        //declaro al propietario
-        PropietarioDAO propietariodao = new PropietarioDAO(connection, 
-            request.getServletContext());
-        
-        //obtener los parametros
-        Propietario propietario = new Propietario(
-                request.getParameter("correo"),
-                request.getParameter("password")
-        );        
-        
-        //ya que obtenemos los parametro debemos verificar si existe 
-        //dicho usuario
-        
-        try{
-            propietario = propietariodao.login(propietario);
-            if(propietario != null){
-                //genero la sesion
-                request.getSession().setAttribute(
-                        "propietario", propietario);
-                response.sendRedirect("inicio.jsp");
-            }else{
-                response.sendRedirect("login.jsp");
-            }
-        }catch(Exception e){
-            System.out.println("Error : " +e.getMessage() );
-        }
-        
+        processRequest(request, response);
     }
 
     /**
